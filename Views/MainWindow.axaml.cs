@@ -35,20 +35,17 @@ public partial class MainWindow : Window
 
         myCanvas.Children.Add(rect);
 
-        rect.PointerPressed += Rect_PointerPressed;
+        AddAdorner(rect);
     }
 
-    private static void Rect_PointerPressed(object? sender, PointerPressedEventArgs e)
+    private void AddAdorner(Polygon rect)
     {
-        if (sender is Polygon polygon)
-        {
-            AdornerLayer? layer = AdornerLayer.GetAdornerLayer(polygon);
+        AdornerLayer? layer = AdornerLayer.GetAdornerLayer(rect);
 
-            if (layer != null)
-            {
-                var selection = new PolygonAdorner(polygon);
-                layer.Children.Add(selection);
-            }
+        if (layer != null)
+        {
+            var selection = new PolygonAdorner(rect, myCanvas);
+            layer.Children.Add(selection);
         }
     }
 }

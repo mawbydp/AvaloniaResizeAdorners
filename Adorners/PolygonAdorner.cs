@@ -8,13 +8,13 @@ namespace AvaloniaResizeAdorners.Adorners;
 
 public class PolygonAdorner : Canvas
 {
-    private readonly Polygon _adornedPolygon;
+    private readonly Polygon _polygon;
     private readonly Thumb _thumb;
 
-    public PolygonAdorner(Polygon adornedPolygon)
+    public PolygonAdorner(Polygon adornedPolygon, Canvas canvas)
     {
-        _adornedPolygon = adornedPolygon;
-
+        _polygon = adornedPolygon;
+        
         _thumb = new Thumb
         {
             Width = 10,
@@ -24,15 +24,32 @@ public class PolygonAdorner : Canvas
         };
 
         _thumb.DragDelta += Thumb_DragDelta;
+        canvas.PointerPressed += _canvas_PointerPressed;
+        _polygon.PointerPressed += _polygon_PointerPressed;
 
         UpdateThumbPosition();
 
         Children.Add(_thumb);
     }
 
+    private void _polygon_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        _polygon.Opacity = 0.5;
+        _thumb.IsHitTestVisible = true;
+    }
+
+    private void _canvas_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (_polygon != null && !_polygon.IsPointerOver)
+        {
+            _polygon.Opacity = 1.0;
+            _thumb.IsHitTestVisible = false;
+        }
+    }
+
     private void Thumb_DragDelta(object? sender, Avalonia.Input.VectorEventArgs e)
     {
-        if (_adornedPolygon.Points.Count != 4)
+        if (_polygon.Points.Count != 4)
             return; // Assuming rectangle shape with 4 points.
 
         // Increase width and height based on drag
@@ -40,12 +57,12 @@ public class PolygonAdorner : Canvas
         double dy = e.Vector.Y;
 
         // Update polygon points
-        _adornedPolygon.Points = new Points
+        _polygon.Points = new Points
         {
             new Point(0, 0),
-            new Point(_adornedPolygon.Points[1].X + dx, 0),
-            new Point(_adornedPolygon.Points[2].X + dx, _adornedPolygon.Points[2].Y + dy),
-            new Point(0, _adornedPolygon.Points[3].Y + dy)
+            new Point(_polygon.Points[1].X + dx, 0),
+            new Point(_polygon.Points[2].X + dx, _polygon.Points[2].Y + dy),
+            new Point(0, _polygon.Points[3].Y + dy)
         };
 
         UpdateThumbPosition();
@@ -54,13 +71,15 @@ public class PolygonAdorner : Canvas
     private void UpdateThumbPosition()
     {
         // Assuming top-left anchored polygon
-        double left = Canvas.GetLeft(_adornedPolygon);
-        double top = Canvas.GetTop(_adornedPolygon);
+        double left = Canvas.GetLeft(_polygon);
+        double top = Canvas.GetTop(_polygon);
 
-        double right = left + _adornedPolygon.Points[1].X;
-        double bottom = top + _adornedPolygon.Points[2].Y;
+        double right = left + _polygon.Points[1].X;
+        double bottom = top + _polygon.Points[2].Y;
 
         SetLeft(_thumb, right + _thumb.Width / 2);
         SetTop(_thumb, bottom + _thumb.Height / 2);
     }
+
+
 }
