@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xVc+gFUX9ko=",
+  "dgSpecHash": "GKWSvbuGzuM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\david\\source\\repos\\AvaloniaApplication8\\AvaloniaResizeAdorners.csproj",
+  "projectFilePath": "C:\\KuasaSemi\\AvaloniaResizeAdorners\\AvaloniaResizeAdorners.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\david\\.nuget\\packages\\avalonia\\11.2.5\\avalonia.11.2.5.nupkg.sha512",
     "C:\\Users\\david\\.nuget\\packages\\avalonia.angle.windows.natives\\2.1.22045.20230930\\avalonia.angle.windows.natives.2.1.22045.20230930.nupkg.sha512",

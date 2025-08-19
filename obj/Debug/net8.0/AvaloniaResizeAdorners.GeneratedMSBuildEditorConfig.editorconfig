@@ -20,7 +20,7 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AvaloniaResizeAdorners
-build_property.ProjectDir = C:\Users\david\source\repos\AvaloniaApplication8\
+build_property.ProjectDir = C:\KuasaSemi\AvaloniaResizeAdorners\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
@@ -29,8 +29,8 @@ build_property.EnableCodeStyleSeverity =
 [C:/Users/david/AppData/Roaming/SonarLint for Visual Studio/.global/csharp/SonarLint.xml]
 build_metadata.AdditionalFiles.SourceItemGroup = 
 
-[C:/Users/david/source/repos/AvaloniaApplication8/App.axaml]
+[C:/KuasaSemi/AvaloniaResizeAdorners/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/david/source/repos/AvaloniaApplication8/Views/MainWindow.axaml]
+[C:/KuasaSemi/AvaloniaResizeAdorners/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

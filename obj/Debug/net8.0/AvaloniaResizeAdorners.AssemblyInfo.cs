@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AvaloniaResizeAdorners")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a6a60bf8cc1f31b932ad690f6ceb03d9f849a5c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d4a936ef716b6b1e8737b047d31b9199fda91a62")]
 [assembly: System.Reflection.AssemblyProductAttribute("AvaloniaResizeAdorners")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AvaloniaResizeAdorners")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
