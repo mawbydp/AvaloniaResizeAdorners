@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
-using Avalonia.Input;
 using AvaloniaResizeAdorners.Adorners;
 
 namespace AvaloniaResizeAdorners.Views;
@@ -17,7 +16,7 @@ public partial class MainWindow : Window
 
     private void MainWindow_Opened(object? sender, System.EventArgs e)
     {
-        var rect = (new Polygon
+        var polygon = new Polygon
         {
             Points = new Points
             {
@@ -28,23 +27,23 @@ public partial class MainWindow : Window
             },
 
             Classes = { "Default" },
-        });
+        };
 
-        Canvas.SetLeft(rect, 50);
-        Canvas.SetTop(rect, 50);
+        Canvas.SetLeft(polygon, 50);
+        Canvas.SetTop(polygon, 50);
 
-        myCanvas.Children.Add(rect);
+        canvas.Children.Add(polygon);
 
-        AddAdorner(rect);
+        AddAdorner(polygon, canvas);
     }
 
-    private void AddAdorner(Polygon rect)
+    private void AddAdorner(Polygon polygon, Canvas canvas)
     {
-        AdornerLayer? layer = AdornerLayer.GetAdornerLayer(rect);
+        AdornerLayer? layer = AdornerLayer.GetAdornerLayer(polygon);
 
         if (layer != null)
         {
-            var selection = new PolygonAdorner(rect, myCanvas);
+            var selection = new PolygonAdorner(polygon, canvas);
             layer.Children.Add(selection);
         }
     }

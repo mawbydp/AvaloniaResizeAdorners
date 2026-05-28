@@ -22,7 +22,7 @@
 
     <Grid Background="Green">
         <Canvas
-            x:Name="myCanvas"
+            x:Name="canvas"
             Margin="10"
             Background="Wheat" />
     </Grid>

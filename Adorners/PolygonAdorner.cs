@@ -8,14 +8,15 @@ namespace AvaloniaResizeAdorners.Adorners;
 
 public class PolygonAdorner : Canvas
 {
-    private readonly Polygon _polygon;
-    private readonly Thumb _thumb;
+    private readonly Polygon polygon;
+    private readonly Thumb thumb;
+    private bool isSelected;
 
     public PolygonAdorner(Polygon adornedPolygon, Canvas canvas)
     {
-        _polygon = adornedPolygon;
+        polygon = adornedPolygon;
         
-        _thumb = new Thumb
+        thumb = new Thumb
         {
             Width = 10,
             Height = 10,
@@ -23,46 +24,65 @@ public class PolygonAdorner : Canvas
             Cursor = new Cursor(StandardCursorType.BottomRightCorner)
         };
 
-        _thumb.DragDelta += Thumb_DragDelta;
-        canvas.PointerPressed += _canvas_PointerPressed;
-        _polygon.PointerPressed += _polygon_PointerPressed;
+        thumb.DragDelta += Thumb_DragDelta;
+        canvas.PointerPressed += Canvas_PointerPressed;
+        polygon.PointerPressed += Polygon_PointerPressed;
 
         UpdateThumbPosition();
 
-        Children.Add(_thumb);
+        Children.Add(thumb);
     }
 
-    private void _polygon_PointerPressed(object? sender, PointerPressedEventArgs e)
+    private void Polygon_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        _polygon.Opacity = 0.5;
-        _thumb.IsHitTestVisible = true;
-    }
-
-    private void _canvas_PointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        if (_polygon != null && !_polygon.IsPointerOver)
+        if (isSelected)
         {
-            _polygon.Opacity = 1.0;
-            _thumb.IsHitTestVisible = false;
+            if (e.GetCurrentPoint(null).Properties.IsRightButtonPressed &&
+                    sender is Control control)
+            {
+                var menu = new ContextMenu();
+
+                menu.Items.Add(new MenuItem { Header = "Edit" });
+                menu.Items.Add(new MenuItem { Header = "Delete" });
+
+                menu.Open(control);
+            }
+        }
+        else
+        {
+            polygon.Opacity = 0.5;
+            thumb.IsHitTestVisible = true;
+            isSelected = true;
         }
     }
 
-    private void Thumb_DragDelta(object? sender, Avalonia.Input.VectorEventArgs e)
+    private void Canvas_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (_polygon.Points.Count != 4)
-            return; // Assuming rectangle shape with 4 points.
+        if (polygon != null && !polygon.IsPointerOver)
+        {
+            polygon.Opacity = 1.0;
+            thumb.IsHitTestVisible = false;
+            isSelected = false;
+        }
+    }
+
+    private void Thumb_DragDelta(object? sender, VectorEventArgs e)
+    {
+        // Assuming rectangle shape with 4 points.
+        if (polygon.Points.Count != 4)
+            return;
 
         // Increase width and height based on drag
         double dx = e.Vector.X;
         double dy = e.Vector.Y;
 
         // Update polygon points
-        _polygon.Points = new Points
+        polygon.Points = new Points
         {
             new Point(0, 0),
-            new Point(_polygon.Points[1].X + dx, 0),
-            new Point(_polygon.Points[2].X + dx, _polygon.Points[2].Y + dy),
-            new Point(0, _polygon.Points[3].Y + dy)
+            new Point(polygon.Points[1].X + dx, 0),
+            new Point(polygon.Points[2].X + dx, polygon.Points[2].Y + dy),
+            new Point(0, polygon.Points[3].Y + dy)
         };
 
         UpdateThumbPosition();
@@ -71,15 +91,13 @@ public class PolygonAdorner : Canvas
     private void UpdateThumbPosition()
     {
         // Assuming top-left anchored polygon
-        double left = Canvas.GetLeft(_polygon);
-        double top = Canvas.GetTop(_polygon);
+        double left = Canvas.GetLeft(polygon);
+        double top = Canvas.GetTop(polygon);
 
-        double right = left + _polygon.Points[1].X;
-        double bottom = top + _polygon.Points[2].Y;
+        double right = left + polygon.Points[1].X;
+        double bottom = top + polygon.Points[2].Y;
 
-        SetLeft(_thumb, right + _thumb.Width / 2);
-        SetTop(_thumb, bottom + _thumb.Height / 2);
+        SetLeft(thumb, right + thumb.Width / 2);
+        SetTop(thumb, bottom + thumb.Height / 2);
     }
-
-
 }
