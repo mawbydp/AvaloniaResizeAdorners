@@ -35,10 +35,12 @@ public class PolygonAdorner : Canvas
 
     private void Polygon_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        if (isSelected)
+        if (isSelected && sender is Visual visual)
         {
-            if (e.GetCurrentPoint(null).Properties.IsRightButtonPressed &&
-                    sender is Control control)
+            var point = e.GetCurrentPoint(visual);
+            
+            // Add context menu
+            if (point.Properties.IsRightButtonPressed && sender is Control control)
             {
                 var menu = new ContextMenu();
 
