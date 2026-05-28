@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using AvaloniaResizeAdorners.Adorners;
+using AvaloniaResizeAdorners.Models;
 
 namespace AvaloniaResizeAdorners.Views;
 
@@ -16,34 +17,40 @@ public partial class MainWindow : Window
 
     private void MainWindow_Opened(object? sender, System.EventArgs e)
     {
-        var polygon = new Polygon
+        Region region = new()
         {
-            Points = new Points
-            {
-                new Point(0, 0),
-                new Point(100, 0),
-                new Point(100, 50),
-                new Point(0, 50)
-            },
+            Name = "Test Name",
+            Doping = 100,
 
-            Classes = { "Default" },
+            Polygon = new Polygon
+            {
+                Points = new Points
+                {
+                    new Point(0, 0),
+                    new Point(100, 0),
+                    new Point(100, 50),
+                    new Point(0, 50)
+                },
+
+                Classes = { "Default" },
+            }
         };
 
-        Canvas.SetLeft(polygon, 50);
-        Canvas.SetTop(polygon, 50);
+        Canvas.SetLeft(region.Polygon, 50);
+        Canvas.SetTop(region.Polygon, 50);
 
-        canvas.Children.Add(polygon);
+        canvas.Children.Add(region.Polygon);
 
-        AddAdorner(polygon, canvas);
+        AddAdorner(region, canvas);
     }
 
-    private void AddAdorner(Polygon polygon, Canvas canvas)
+    private void AddAdorner(Region region, Canvas canvas)
     {
-        AdornerLayer? layer = AdornerLayer.GetAdornerLayer(polygon);
+        AdornerLayer? layer = AdornerLayer.GetAdornerLayer(region.Polygon);
 
         if (layer != null)
         {
-            var selection = new PolygonAdorner(polygon, canvas);
+            var selection = new PolygonAdorner(region, canvas);
             layer.Children.Add(selection);
         }
     }
