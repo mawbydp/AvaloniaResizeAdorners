@@ -3,6 +3,8 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
+using Avalonia.Media;
+using System;
 
 namespace AvaloniaResizeAdorners.Adorners;
 
@@ -44,8 +46,14 @@ public class PolygonAdorner : Canvas
             {
                 var menu = new ContextMenu();
 
-                menu.Items.Add(new MenuItem { Header = "Edit" });
-                menu.Items.Add(new MenuItem { Header = "Delete" });
+                MenuItem item1 = new MenuItem { Header = "Show Window..." };
+                MenuItem item2 = new MenuItem { Header = "Change Colour..." };
+
+                item1.Click += Item1_Click;
+                item2.Click += Item2_Click; ;
+
+                menu.Items.Add(item1);
+                menu.Items.Add(item2);
 
                 menu.Open(control);
             }
@@ -56,6 +64,22 @@ public class PolygonAdorner : Canvas
             thumb.IsHitTestVisible = true;
             isSelected = true;
         }
+    }
+
+    private void Item1_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        new Window().Show();
+    }
+
+    private void Item2_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        var rand = new Random();
+
+        polygon.Fill = new SolidColorBrush(Color.FromRgb(
+            (byte)rand.Next(256),
+            (byte)rand.Next(256),
+            (byte)rand.Next(256)
+        ));
     }
 
     private void Canvas_PointerPressed(object? sender, PointerPressedEventArgs e)
