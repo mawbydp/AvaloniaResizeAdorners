@@ -1,0 +1,50 @@
+<Window
+    x:Class="AvaloniaResizeAdorners.Views.DragAndDrop"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Avalonia Drag and Drop Demo"
+    Width="700"
+    Height="450"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <DockPanel>
+        <StackPanel
+            Background="#F0F0F0"
+            DockPanel.Dock="Top"
+            Orientation="Horizontal"
+            Spacing="10">
+
+            <TextBlock
+                Margin="0,0,10,0"
+                VerticalAlignment="Center"
+                FontWeight="Bold"
+                Text="Drag an item:" />
+
+            <Border
+                Name="Resistor"
+                Width="40"
+                Height="40"
+                Background="DeepSkyBlue"
+                CornerRadius="4"
+                Cursor="Hand"
+                PointerPressed="ToolbarItem_PointerPressed" />
+
+            <Border
+                Name="Device"
+                Width="40"
+                Height="40"
+                Background="Crimson"
+                CornerRadius="20"
+                Cursor="Hand"
+                PointerPressed="ToolbarItem_PointerPressed" />
+        </StackPanel>
+
+        <Canvas
+            Name="DropCanvas"
+            Background="#FFFDE0"
+            DragDrop.AllowDrop="True" />
+    </DockPanel>
+</Window>

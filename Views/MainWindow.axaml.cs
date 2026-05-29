@@ -13,6 +13,8 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         Opened += MainWindow_Opened;
+
+        new DragAndDrop().Show();
     }
 
     private void MainWindow_Opened(object? sender, System.EventArgs e)

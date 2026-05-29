@@ -7,6 +7,7 @@ using Avalonia.Media;
 using AvaloniaResizeAdorners.Models;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,6 +34,11 @@ public class PolygonAdorner : Canvas
         polygon.PointerMoved += Polygon_PointerMoved;
         canvas.PointerPressed += Canvas_PointerPressed;
 
+        Loaded += PolygonAdorner_Loaded;
+    }
+
+    private void PolygonAdorner_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
         AddThumbs();
     }
 
@@ -117,21 +123,27 @@ public class PolygonAdorner : Canvas
 
     private void UpdateThumbPositions()
     {
-        double left = GetLeft(polygon);
-        double top = GetTop(polygon);
-
         for (int i = 0; i < pointThumbs.Count; i++)
         {
             var p = polygon.Points[i];
 
-            SetLeft(pointThumbs[i], left + p.X + thumbSize / 2);
-            SetTop(pointThumbs[i], top + p.Y + thumbSize / 2);
+            var transformed = polygon.TranslatePoint(p, this);
+
+            if (transformed.HasValue)
+            {
+                SetLeft(pointThumbs[i], transformed.Value.X - thumbSize / 2);
+                SetTop(pointThumbs[i], transformed.Value.Y - thumbSize / 2);
+            }
         }
     }
 
     private void Polygon_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        var point = e.GetCurrentPoint(polygon);
+        if (e.ClickCount == 2)
+        {
+            ShowWindow();
+            return;
+        }
 
         if (!isSelected)
         {
@@ -143,7 +155,7 @@ public class PolygonAdorner : Canvas
                 thumb.IsHitTestVisible = true;
             }
         }
-        else if (point.Properties.IsLeftButtonPressed)
+        else if (e.GetCurrentPoint(polygon).Properties.IsLeftButtonPressed)
         {
             isDragging = true;
             lastPointerPosition = e.GetPosition(polygon);
@@ -183,12 +195,7 @@ public class PolygonAdorner : Canvas
 
     private void Item1_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        var messageBox = MessageBoxManager
-                .GetMessageBoxStandard("Aquarius",
-                                       $"Region Name: {region.Name}\n" +
-                                       $"Doping: {region.Doping}", ButtonEnum.Ok, Icon.Question);
-
-        Task<ButtonResult>? result = messageBox.ShowAsync();
+        ShowWindow();
     }
 
     private void Item2_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -214,5 +221,13 @@ public class PolygonAdorner : Canvas
                 thumb.IsHitTestVisible = false;
             }
         }
+    }
+
+    private void ShowWindow()
+    {
+        var messageBox = MessageBoxManager
+                .GetMessageBoxStandard("Aquarius", "Hello! This mimics a property window!", ButtonEnum.OkCancel);
+
+        messageBox.ShowAsync();
     }
 }
