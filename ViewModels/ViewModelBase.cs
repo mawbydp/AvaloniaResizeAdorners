@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace AvaloniaResizeAdorners.ViewModels;
+namespace Aquarius.ViewModels;
 
 public class ViewModelBase : ObservableObject
 {

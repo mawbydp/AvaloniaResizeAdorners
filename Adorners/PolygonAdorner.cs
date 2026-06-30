@@ -4,7 +4,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Media;
-using AvaloniaResizeAdorners.Models;
+using Aquarius.Models;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using SkiaSharp;
@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AvaloniaResizeAdorners.Adorners;
+namespace Aquarius.Adorners;
 
 public class PolygonAdorner : Canvas
 {

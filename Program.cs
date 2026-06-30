@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace AvaloniaResizeAdorners;
+namespace Aquarius;
 
 sealed class Program
 {

@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using AvaloniaResizeAdorners.ViewModels;
-using AvaloniaResizeAdorners.Views;
+using Aquarius.ViewModels;
+using Aquarius.Views;
 
-namespace AvaloniaResizeAdorners;
+namespace Aquarius;
 
 public partial class App : Application
 {
@@ -17,10 +17,7 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = new MainWindowViewModel(),
-            };
+            desktop.MainWindow = new DragAndDrop();
         }
 
         base.OnFrameworkInitializationCompleted();

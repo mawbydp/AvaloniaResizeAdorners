@@ -4,14 +4,14 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Media;
-using AvaloniaResizeAdorners.Adorners;
-using AvaloniaResizeAdorners.Models;
+using Aquarius.Adorners;
+using Aquarius.Models;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using System;
 using System.Linq;
 
-namespace AvaloniaResizeAdorners.Views;
+namespace Aquarius.Views;
 
 public partial class DragAndDrop : Window
 {
@@ -189,7 +189,7 @@ public partial class DragAndDrop : Window
         }
     }
 
-    private void AddAdorner(Region region, Canvas canvas)
+    private static void AddAdorner(Region region, Canvas canvas)
     {
         AdornerLayer? layer = AdornerLayer.GetAdornerLayer(region.Polygon);
 

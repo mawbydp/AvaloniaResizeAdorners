@@ -1,6 +1,6 @@
 ﻿using Avalonia.Controls.Shapes;
 
-namespace AvaloniaResizeAdorners.Models
+namespace Aquarius.Models
 {
     public class Region
     {

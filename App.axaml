@@ -1,8 +1,8 @@
 <Application
-    x:Class="AvaloniaResizeAdorners.App"
+    x:Class="Aquarius.App"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:AvaloniaResizeAdorners"
+    xmlns:local="using:Aquarius"
     RequestedThemeVariant="Light">
     <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
 
