@@ -1,24 +1,22 @@
-﻿using Avalonia;
+﻿using Aquarius.Models;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Media;
-using Aquarius.Models;
 using MsBox.Avalonia;
+using Avalonia.Interactivity;
 using MsBox.Avalonia.Enums;
-using SkiaSharp;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Aquarius.Adorners;
 
 public class PolygonAdorner : Canvas
 {
-    private readonly Region region;
     private readonly Polygon polygon;
-    private readonly List<Thumb> pointThumbs = new();
+    private readonly List<Thumb> pointThumbs = [];
     private bool isSelected;
     private const double thumbSize = 10;
     private bool isDragging;
@@ -26,8 +24,7 @@ public class PolygonAdorner : Canvas
 
     public PolygonAdorner(Region adornedRegion, Canvas canvas)
     {
-        region = adornedRegion;
-        polygon = region.Polygon;
+        polygon = adornedRegion.Polygon;
 
         polygon.PointerPressed += Polygon_PointerPressed;
         polygon.PointerReleased += Polygon_PointerReleased;
@@ -37,7 +34,7 @@ public class PolygonAdorner : Canvas
         Loaded += PolygonAdorner_Loaded;
     }
 
-    private void PolygonAdorner_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void PolygonAdorner_Loaded(object? sender, RoutedEventArgs e)
     {
         AddThumbs();
     }
@@ -45,9 +42,11 @@ public class PolygonAdorner : Canvas
     private void Polygon_PointerMoved(object? sender, PointerEventArgs e)
     {
         if (!isDragging)
+        {
             return;
+        }
 
-        var currentPos = e.GetPosition(polygon);
+        Point currentPos = e.GetPosition(polygon);
 
         double dx = currentPos.X - lastPointerPosition.X;
         double dy = currentPos.Y - lastPointerPosition.Y;
@@ -69,9 +68,9 @@ public class PolygonAdorner : Canvas
             );
         }
 
-        polygon.Points = new Points(pts);
+        polygon.Points = [.. pts];
 
-        UpdateThumbPositions(); // important if using point thumbs
+        UpdateThumbPositions();
     }
 
     private void Polygon_PointerReleased(object? sender, PointerReleasedEventArgs e)
@@ -116,7 +115,7 @@ public class PolygonAdorner : Canvas
             points[index].Y + delta.Y
         );
 
-        polygon.Points = new Points(points);
+        polygon.Points = [.. points];
 
         UpdateThumbPositions();
     }
@@ -180,8 +179,8 @@ public class PolygonAdorner : Canvas
         {
             var menu = new ContextMenu();
 
-            MenuItem item1 = new MenuItem { Header = "Show Window..." };
-            MenuItem item2 = new MenuItem { Header = "Change Colour..." };
+            MenuItem item1 = new() { Header = "Show Window..." };
+            MenuItem item2 = new() { Header = "Change Colour..." };
 
             item1.Click += Item1_Click;
             item2.Click += Item2_Click;
@@ -193,12 +192,12 @@ public class PolygonAdorner : Canvas
         }
     }
 
-    private void Item1_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private static void Item1_Click(object? sender, RoutedEventArgs e)
     {
         ShowWindow();
     }
 
-    private void Item2_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void Item2_Click(object? sender, RoutedEventArgs e)
     {
         var rand = new Random();
 
@@ -223,7 +222,7 @@ public class PolygonAdorner : Canvas
         }
     }
 
-    private void ShowWindow()
+    private static void ShowWindow()
     {
         var messageBox = MessageBoxManager
                 .GetMessageBoxStandard("Aquarius", "Hello! This mimics a property window!", ButtonEnum.OkCancel);

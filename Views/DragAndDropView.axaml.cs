@@ -1,24 +1,26 @@
+using Aquarius.Adorners;
+using Aquarius.Models;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.PanAndZoom;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Media;
-using Aquarius.Adorners;
-using Aquarius.Models;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Aquarius.Views;
 
-public partial class DragAndDrop : Window
+public partial class DragAndDropView : Window
 {
     private bool isDragging;
     private Point lastPointerPosition;
 
-    public DragAndDrop()
+    public DragAndDropView()
     {
         InitializeComponent();
 
@@ -28,7 +30,7 @@ public partial class DragAndDrop : Window
     }
 
     // 1. Kick off the Drag operation using Avalonia 12 DataTransfer
-    private async void ToolbarItem_PointerPressed(object? sender, PointerPressedEventArgs e)
+    private static async void ToolbarItem_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (sender is Border border && !string.IsNullOrEmpty(border.Name))
         {
@@ -43,7 +45,7 @@ public partial class DragAndDrop : Window
     }
 
     // 2. Validate that the canvas can accept the incoming data type
-    private void Canvas_DragOver(object? sender, DragEventArgs e)
+    private static void Canvas_DragOver(object? sender, DragEventArgs e)
     {
         // Look inside Formats using DataFormat.Text
         if (e.DataTransfer.Formats.Contains(DataFormat.Text))
@@ -86,13 +88,13 @@ public partial class DragAndDrop : Window
         {
             newVisualElement = new Polygon
             {
-                Points = new Points
-                {
+                Points =
+                [
                     new Point(0, 0),
                     new Point(100, 0),
                     new Point(100, 50),
                     new Point(0, 50)
-                },
+                ],
 
                 Classes = { "Default" },
             };

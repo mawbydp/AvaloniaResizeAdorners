@@ -1,9 +1,10 @@
 <Window
-    x:Class="Aquarius.Views.DragAndDrop"
+    x:Class="Aquarius.Views.DragAndDropView"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:paz="using:Avalonia.Controls.PanAndZoom"
     Title="Avalonia Drag and Drop Demo"
     Width="700"
     Height="450"
@@ -42,9 +43,19 @@
                 PointerPressed="ToolbarItem_PointerPressed" />
         </StackPanel>
 
-        <Canvas
-            Name="DropCanvas"
-            Background="#FFFDE0"
-            DragDrop.AllowDrop="True" />
+        <paz:ZoomBorder
+            Name="ZoomBorder"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Background="SlateBlue"
+            ClipToBounds="True"
+            Focusable="True"
+            Stretch="None"
+            ZoomSpeed="1.2">
+            <Canvas
+                Name="DropCanvas"
+                Background="#FFFDE0"
+                DragDrop.AllowDrop="True" />
+        </paz:ZoomBorder>
     </DockPanel>
 </Window>
